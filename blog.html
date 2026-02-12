@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thành Tích | Tiến Minh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; font-family: 'Quicksand', sans-serif;
+            background: #0a0118; color: white; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; padding: 2rem;
+        }
+        .container { max-width: 800px; width: 100%; }
+        h1 {
+            text-align: center; font-size: 2.5rem; margin-bottom: 2rem;
+            background: linear-gradient(135deg, #00ff87, #60efff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .post {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+            padding: 1.5rem; margin-bottom: 1.5rem; animation: fadeIn 0.5s ease;
+        }
+        .post h3 { color: #60efff; margin-top: 0; }
+        .post-body img { max-width: 100%; border-radius: 10px; margin: 10px 0; }
+        .post-meta { font-size: 0.8rem; opacity: 0.5; margin-bottom: 10px; }
+        
+        /* Nút quay lại */
+        .btn-group { display: flex; justify-content: center; margin-top: 2rem; }
+        .back-btn {
+            color: #60efff; text-decoration: none; padding: 12px 25px;
+            border: 2px solid #60efff; border-radius: 50px; font-weight: bold;
+            transition: 0.3s; background: transparent;
+        }
+        .back-btn:hover { background: #60efff; color: #0a0118; box-shadow: 0 0 20px rgba(96, 239, 255, 0.5); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏆 Nhật Ký Thành Tích</h1>
+        <div id="blog-content">🚀 Đang kết nối với vệ tinh GitHub...</div>
+        
+        <div class="btn-group">
+            <a href="index.html" class="back-btn">🏠 Về Trang Chủ Vũ Trụ</a>
+        </div>
+    </div>
+
+    <script>
+        // --- CẤU HÌNH ---
+        const USER = 'TEN_USER_CUA_BAN'; // <--- Thay tên GitHub của bạn vào đây
+        const REPO = `${USER}.github.io`; 
+
+        async function loadIssues() {
+            const content = document.getElementById('blog-content');
+            try {
+                const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues?state=open`);
+                const data = await res.json();
+                
+                if (data.length === 0) {
+                    content.innerHTML = '<p style="text-align:center">Chưa có bài đăng nào. Hãy tạo một "Issue" trên GitHub để bắt đầu!</p>';
+                    return;
+                }
+
+                content.innerHTML = data.map(issue => `
+                    <div class="post">
+                        <div class="post-meta">📅 ${new Date(issue.created_at).toLocaleDateString('vi-VN')}</div>
+                        <h3>${issue.title}</h3>
+                        <div class="post-body">${parseMarkdown(issue.body)}</div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                content.innerHTML = '❌ Không thể tải bài viết. Kiểm tra lại tên User/Repo.';
+            }
+        }
+
+        // Hàm xử lý xuống dòng cơ bản
+        function parseMarkdown(text) {
+            if (!text) return '';
+            return text.replace(/\n/g, '<br>');
+        }
+
+        loadIssues();
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thành Tích | Tiến Minh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; font-family: 'Quicksand', sans-serif;
+            background: #0a0118; color: white; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; padding: 2rem;
+        }
+        .container { max-width: 800px; width: 100%; }
+        h1 {
+            text-align: center; font-size: 2.5rem; margin-bottom: 2rem;
+            background: linear-gradient(135deg, #00ff87, #60efff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .post {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+            padding: 1.5rem; margin-bottom: 1.5rem; animation: fadeIn 0.5s ease;
+        }
+        .post h3 { color: #60efff; margin-top: 0; }
+        .post-body img { max-width: 100%; border-radius: 10px; margin: 10px 0; }
+        .post-meta { font-size: 0.8rem; opacity: 0.5; margin-bottom: 10px; }
+        
+        /* Nút quay lại */
+        .btn-group { display: flex; justify-content: center; margin-top: 2rem; }
+        .back-btn {
+            color: #60efff; text-decoration: none; padding: 12px 25px;
+            border: 2px solid #60efff; border-radius: 50px; font-weight: bold;
+            transition: 0.3s; background: transparent;
+        }
+        .back-btn:hover { background: #60efff; color: #0a0118; box-shadow: 0 0 20px rgba(96, 239, 255, 0.5); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏆 Nhật Ký Thành Tích</h1>
+        <div id="blog-content">🚀 Đang kết nối với vệ tinh GitHub...</div>
+        
+        <div class="btn-group">
+            <a href="index.html" class="back-btn">🏠 Về Trang Chủ Vũ Trụ</a>
+        </div>
+    </div>
+
+    <script>
+        // --- CẤU HÌNH ---
+        const USER = 'TEN_USER_CUA_BAN'; // <--- Thay tên GitHub của bạn vào đây
+        const REPO = `${USER}.github.io`; 
+
+        async function loadIssues() {
+            const content = document.getElementById('blog-content');
+            try {
+                const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues?state=open`);
+                const data = await res.json();
+                
+                if (data.length === 0) {
+                    content.innerHTML = '<p style="text-align:center">Chưa có bài đăng nào. Hãy tạo một "Issue" trên GitHub để bắt đầu!</p>';
+                    return;
+                }
+
+                content.innerHTML = data.map(issue => `
+                    <div class="post">
+                        <div class="post-meta">📅 ${new Date(issue.created_at).toLocaleDateString('vi-VN')}</div>
+                        <h3>${issue.title}</h3>
+                        <div class="post-body">${parseMarkdown(issue.body)}</div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                content.innerHTML = '❌ Không thể tải bài viết. Kiểm tra lại tên User/Repo.';
+            }
+        }
+
+        // Hàm xử lý xuống dòng cơ bản
+        function parseMarkdown(text) {
+            if (!text) return '';
+            return text.replace(/\n/g, '<br>');
+        }
+
+        loadIssues();
+    </script>
+</body>
+</html>
