@@ -3,177 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiến Minh | Vũ Trụ Dải Ngân Hà</title>
+    <title>Tiến Minh | Galaxy Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset và Font */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Quicksand', sans-serif; overflow: hidden; background: #000; color: white; cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="rgba(255,255,255,0.8)" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93h1c0 3.73 2.91 6.83 6.64 6.93l-.64 1zm-4.32-2.15l-.75-.48C4.77 14.86 4 13.52 4 12h1c0 1.25.64 2.39 1.68 3.06l.75.48-.38.62zM12 4.07c3.95.49 7 3.85 7 7.93h-1c0-3.73-2.91-6.83-6.64-6.93l.64-1zm4.32 2.15l.75.48C19.23 9.14 20 10.48 20 12h-1c0-1.25-.64-2.39-1.68-3.06l-.75-.48.38-.62z" opacity="0.8"/></svg>') 12 12, auto; }
+        body { font-family: 'Quicksand', sans-serif; overflow: hidden; background: #000; color: white; }
 
-        /* Vùng nền Galaxy */
+        /* Nền Thiên Hà */
         .galaxy-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(ellipse at 50% 120%, rgba(20, 0, 40, 0.5), transparent),
                         linear-gradient(180deg, #02010a 0%, #1a0b2e 100%);
             z-index: 1; overflow: hidden;
-            perspective: 1000px; /* Thêm phối cảnh 3D */
         }
 
-        /* Tinh vân chuyển động (Nebula Layers) */
+        /* Mây Tinh Vân */
         .nebula-layer {
             position: absolute; width: 150%; height: 150%; top: -25%; left: -25%;
-            background-repeat: no-repeat;
-            background-size: cover;
+            filter: blur(60px); opacity: 0.6;
             animation: nebulaMove 40s infinite linear alternate;
-            filter: blur(50px);
         }
-        .nebula-layer:nth-child(1) {
-            background-image: radial-gradient(circle at 20% 80%, rgba(147, 51, 234, 0.2) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.15) 0%, transparent 50%);
-            animation-duration: 35s; transform: scale(1.1);
+        .nebula-1 {
+            background-image: radial-gradient(circle at 20% 80%, rgba(147, 51, 234, 0.25), transparent 50%);
         }
-        .nebula-layer:nth-child(2) {
-            background-image: radial-gradient(circle at 70% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 45%),
-                              radial-gradient(circle at 40% 60%, rgba(255, 100, 0, 0.1) 0%, transparent 45%);
-            animation-duration: 45s; transform: scale(1.2); animation-direction: alternate-reverse;
+        .nebula-2 {
+            background-image: radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.2), transparent 50%);
+            animation-duration: 50s; animation-direction: alternate-reverse;
         }
         @keyframes nebulaMove {
-            from { transform: translate(-10%, -10%) rotate(0deg); }
-            to { transform: translate(10%, 10%) rotate(5deg); }
+            from { transform: translate(-5%, -5%) rotate(0deg); }
+            to { transform: translate(5%, 5%) rotate(3deg); }
         }
 
-        /* Mặt trăng */
+        /* Mặt Trăng */
         .moon {
-            position: absolute; width: 300px; height: 300px; border-radius: 50%;
-            background: radial-gradient(circle at 25% 25%, #f0f0f0, #ccc 60%, #999);
-            box-shadow: 0 0 80px rgba(170, 170, 170, 0.4), inset 0 0 50px rgba(0,0,0,0.3);
-            top: 10%; right: 10%;
-            transform: translateZ(-100px); /* Đặt sâu vào 3D */
-            animation: moonGlow 15s infinite alternate ease-in-out;
-            opacity: 0.8;
+            position: absolute; width: 250px; height: 250px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffffff, #d1d1d1 50%, #888);
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.2), inset -10px -10px 50px rgba(0,0,0,0.4);
+            top: 8%; right: 10%; opacity: 0.85;
+            animation: moonFloat 10s infinite ease-in-out;
         }
-        @keyframes moonGlow {
-            0% { opacity: 0.8; transform: scale(1) translateZ(-100px); }
-            50% { opacity: 0.9; transform: scale(1.05) translateZ(-100px); }
-            100% { opacity: 0.8; transform: scale(1) translateZ(-100px); }
+        @keyframes moonFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.02); }
         }
 
-        /* Sao tĩnh */
-        .stars-static {
+        /* Sao tĩnh lấp lánh */
+        .stars-bg {
             position: absolute; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(1px 1px at 10% 20%, #fff, transparent),
-                radial-gradient(1px 1px at 30% 50%, #fff, transparent),
-                radial-gradient(2px 2px at 50% 80%, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 80% 10%, #fff, transparent),
-                radial-gradient(1.2px 1.2px at 60% 30%, #fff, transparent),
-                radial-gradient(1.8px 1.8px at 20% 90%, #fff, transparent);
-            background-size: 200px 200px;
-            opacity: 0.3;
-            animation: starsDrift 120s infinite linear;
-        }
-        @keyframes starsDrift {
-            from { background-position: 0 0; }
-            to { background-position: 200px 400px; }
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.4;
         }
 
-        /* Sao lấp lánh (JS tạo) */
-        .star { position: absolute; background: white; border-radius: 50%; opacity: 0; animation: twinkle var(--d) infinite ease-in-out; }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.6); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Sao băng (Shooting Stars) */
+        /* Sao băng */
         .shooting-star {
-            position: absolute; width: 3px; height: 100px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
-            filter: blur(1px);
-            opacity: 0; animation: shoot var(--t) infinite ease-in;
-            transform-origin: top;
+            position: absolute; width: 2px; height: 80px;
+            background: linear-gradient(to bottom, transparent, #fff);
+            opacity: 0; animation: shoot var(--d) infinite linear;
             transform: rotate(-45deg);
         }
         @keyframes shoot {
-            0% { transform: translateY(-200px) translateX(0) rotate(-45deg); opacity: 0; }
-            5% { opacity: 1; }
-            10% { transform: translateY(120vh) translateX(-120vw) rotate(-45deg); opacity: 0; }
+            0% { transform: translateY(-100px) translateX(0) rotate(-45deg); opacity: 0; }
+            10% { opacity: 1; }
+            30% { transform: translateY(800px) translateX(-800px) rotate(-45deg); opacity: 0; }
             100% { opacity: 0; }
         }
 
-        /* Vụ nổ sao khi click */
-        .star-burst {
-            position: absolute; background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%; pointer-events: none;
-            animation: burst 0.8s forwards;
-            z-index: 1000;
-        }
-        @keyframes burst {
-            from { transform: scale(0); opacity: 1; }
-            to { transform: scale(1); opacity: 0; }
-        }
+        /* Sao lấp lánh (JS tạo) */
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        /* Nội dung chính */
+        /* Nội dung */
         .content {
             position: relative; z-index: 10; height: 100vh;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(2px); /* Blur nhẹ nền để nội dung nổi bật */
         }
 
         .profile-name {
             font-family: 'Pacifico', cursive; font-size: 4.5rem; margin-bottom: 2rem;
             background: linear-gradient(135deg, #00ff87, #60efff, #ff69f5);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 20px rgba(0, 255, 135, 0.5));
-            animation: nameGlow 3s infinite alternate;
-        }
-        @keyframes nameGlow {
-            from { filter: drop-shadow(0 0 10px rgba(0, 255, 135, 0.4)); }
-            to { filter: drop-shadow(0 0 25px rgba(96, 239, 255, 0.6)); }
+            filter: drop-shadow(0 0 15px rgba(96, 239, 255, 0.5));
         }
 
-        .social-icons { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; }
+        .social-icons { display: flex; gap: 2rem; margin-bottom: 2.5rem; }
         .social-icon { 
-            width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.08);
-            display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.25);
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1.2); /* Nảy hơn */
-            text-decoration: none;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            width: 65px; height: 65px; border-radius: 50%; background: rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.4s; backdrop-filter: blur(10px);
         }
-        .social-icon:hover { 
-            transform: translateY(-15px) scale(1.15) rotate(5deg); 
-            background: rgba(255,255,255,0.2); 
-            border-color: #00ff87; 
-            box-shadow: 0 0 30px rgba(0, 255, 135, 0.6), 0 0 50px rgba(96, 239, 255, 0.4);
-        }
-        .social-icon img { width: 35px; filter: invert(1) drop-shadow(0 0 5px rgba(255,255,255,0.8)); }
+        .social-icon:hover { transform: translateY(-10px); background: rgba(255,255,255,0.2); border-color: #60efff; }
+        .social-icon img { width: 30px; filter: invert(1); }
 
         .music-player {
-            background: rgba(10, 5, 20, 0.8); backdrop-filter: blur(20px);
-            padding: 2.5rem; border-radius: 30px; border: 1px solid rgba(255,255,255,0.15);
-            text-align: center; color: white; width: 400px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px);
+            padding: 2rem; border-radius: 25px; border: 1px solid rgba(255,255,255,0.1);
+            text-align: center; width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .player-controls { display: flex; justify-content: center; gap: 2rem; margin-top: 1.8rem; }
-        .control-btn { 
-            background: none; border: none; font-size: 2rem; cursor: pointer; color: white; 
-            transition: all 0.3s ease; text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-        .control-btn:hover { transform: scale(1.3) rotate(5deg); color: #00ff87; text-shadow: 0 0 15px #00ff87; }
-        .progress-bar { width: 100%; height: 8px; background: #222; margin-top: 20px; border-radius: 10px; cursor: pointer; position: relative; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, #00ff87, #60efff, #ff69f5); width: 0%; border-radius: 10px; transition: width 0.1s linear; }
+        .control-btn { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: white; margin: 0 15px; transition: 0.3s; }
+        .control-btn:hover { color: #00ff87; transform: scale(1.2); }
+        .progress-bar { width: 100%; height: 6px; background: #333; margin-top: 20px; border-radius: 10px; cursor: pointer; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #00ff87, #60efff); width: 0%; border-radius: 10px; }
     </style>
 </head>
 <body>
     <div class="galaxy-wrapper">
-        <div class="nebula-layer"></div>
-        <div class="nebula-layer"></div>
+        <div class="nebula-layer nebula-1"></div>
+        <div class="nebula-layer nebula-2"></div>
         <div class="moon"></div>
-        <div class="stars-static"></div>
-        <div id="dynamicStars"></div>
-        <div class="shooting-star" style="top: 15%; right: 20%; animation-delay: 2s; --t: 4s;"></div>
-        <div class="shooting-star" style="top: 40%; left: 10%; animation-delay: 6s; --t: 6s;"></div>
-        <div class="shooting-star" style="top: 70%; right: 60%; animation-delay: 10s; --t: 5s;"></div>
+        <div class="stars-bg"></div>
+        <div id="starField"></div>
+        
+        <div class="shooting-star" style="top:0; right:10%; --d:5s;"></div>
+        <div class="shooting-star" style="top:20%; right:40%; --d:8s;"></div>
     </div>
 
     <div class="content">
@@ -192,8 +134,8 @@
         </div>
 
         <div class="music-player">
-            <div id="songTitle" style="font-weight: bold; font-size: 1.2rem; color: #60efff; text-shadow: 0 0 10px rgba(96, 239, 255, 0.4);">Đang tải...</div>
-            <div id="songArtist" style="font-size: 0.9rem; opacity: 0.7; margin-top: 8px;">Vui lòng đợi</div>
+            <div id="songTitle" style="font-weight: bold; color: #60efff;">Đang tải...</div>
+            <div id="songArtist" style="font-size: 0.8rem; opacity: 0.6;">Vui lòng đợi</div>
             <div class="player-controls">
                 <button class="control-btn" onclick="prevTrack()">⏮️</button>
                 <button class="control-btn" id="playBtn" onclick="togglePlay()">▶️</button>
@@ -208,91 +150,54 @@
     <audio id="audio"></audio>
 
     <script>
-        // Hiệu ứng sao lấp lánh (nâng cấp)
-        const starContainer = document.getElementById('dynamicStars');
-        for (let i = 0; i < 200; i++) { // Tăng số lượng sao
-            const star = document.createElement('div');
-            star.className = 'star';
-            const size = Math.random() * 2 + 0.5 + 'px'; // Kích thước đa dạng hơn
-            star.style.width = size;
-            star.style.height = size;
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.setProperty('--d', Math.random() * 4 + 2 + 's'); // Thời gian lấp lánh ngẫu nhiên
-            star.style.animationDelay = Math.random() * 6 + 's'; // Delay ngẫu nhiên
-            starContainer.appendChild(star);
+        // Tạo sao lấp lánh
+        const field = document.getElementById('starField');
+        for (let i = 0; i < 100; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            const size = Math.random() * 3 + 'px';
+            s.style.width = s.style.height = size;
+            s.style.left = Math.random() * 100 + '%';
+            s.style.top = Math.random() * 100 + '%';
+            s.style.setProperty('--t', Math.random() * 3 + 2 + 's');
+            field.appendChild(s);
         }
 
-        // Hiệu ứng click chuột (Vụ nổ sao)
-        document.addEventListener('click', (e) => {
-            const burst = document.createElement('div');
-            burst.className = 'star-burst';
-            const size = Math.random() * 40 + 20; // Kích thước vụ nổ ngẫu nhiên
-            burst.style.width = burst.style.height = size + 'px';
-            burst.style.left = (e.clientX - size / 2) + 'px';
-            burst.style.top = (e.clientY - size / 2) + 'px';
-            document.body.appendChild(burst);
-            burst.addEventListener('animationend', () => {
-                burst.remove();
-            });
-        });
-
-        // --- HỆ THỐNG NHẠC (Giữ nguyên) ---
+        // Nhạc nhẽo
         const playlist = [
-            { title: "Tối Cho Cô Gái Đồ Remix", artist: "Đang Cập Nhật", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-            { title: "Chờ Đợi Em Nơi Đây", artist: "MONO", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-            { title: "Một Ngày Nào Đó", artist: "Nguyễn Hải Phong", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+            { title: "Cứ Chill Thôi", artist: "Chillies", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+            { title: "Waiting For You", artist: "MONO", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" }
         ];
 
         let currentTrack = 0;
         const audio = document.getElementById('audio');
         const playBtn = document.getElementById('playBtn');
 
-        function loadTrack(index) {
-            const track = playlist[index];
-            audio.src = track.src;
-            document.getElementById('songTitle').innerText = track.title;
-            document.getElementById('songArtist').innerText = track.artist;
+        function loadTrack(i) {
+            audio.src = playlist[i].src;
+            document.getElementById('songTitle').innerText = playlist[i].title;
+            document.getElementById('songArtist').innerText = playlist[i].artist;
         }
 
         function togglePlay() {
-            if (audio.paused) {
-                audio.play();
-                playBtn.innerText = '⏸️';
-            } else {
-                audio.pause();
-                playBtn.innerText = '▶️';
-            }
+            if (audio.paused) { audio.play(); playBtn.innerText = '⏸️'; }
+            else { audio.pause(); playBtn.innerText = '▶️'; }
         }
 
-        function nextTrack() {
-            currentTrack = (currentTrack + 1) % playlist.length;
-            loadTrack(currentTrack);
-            audio.play();
-            playBtn.innerText = '⏸️';
-        }
-
-        function prevTrack() {
-            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
-            loadTrack(currentTrack);
-            audio.play();
-            playBtn.innerText = '⏸️';
-        }
+        function nextTrack() { currentTrack = (currentTrack + 1) % playlist.length; loadTrack(currentTrack); audio.play(); playBtn.innerText = '⏸️'; }
+        function prevTrack() { currentTrack = (currentTrack - 1 + playlist.length) % playlist.length; loadTrack(currentTrack); audio.play(); playBtn.innerText = '⏸️'; }
 
         audio.ontimeupdate = () => {
-            if (audio.duration) {
-                const pct = (audio.currentTime / audio.duration) * 100;
-                document.getElementById('progressFill').style.width = pct + '%';
-            }
+            const pct = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progressFill').style.width = pct + '%';
         };
 
         document.getElementById('progressBar').onclick = (e) => {
             const width = document.getElementById('progressBar').clientWidth;
-            const clickX = e.offsetX;
-            audio.currentTime = (clickX / width) * audio.duration;
+            audio.currentTime = (e.offsetX / width) * audio.duration;
         };
 
-        loadTrack(0); // Tải bài hát đầu tiên khi trang load
+        loadTrack(0);
     </script>
 </body>
 </html>
