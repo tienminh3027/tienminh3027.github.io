@@ -11,6 +11,8 @@
         h1 { text-align: center; font-size: 2.5rem; margin-bottom: 2rem; background: linear-gradient(135deg, #00ff87, #60efff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .post { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; }
         .post h3 { color: #60efff; margin-top: 0; }
+        /* Fix để ảnh trong Issue hiển thị đẹp */
+        .post-body img { max-width: 100%; height: auto; border-radius: 10px; margin: 10px 0; display: block; }
         .back-btn { display: inline-block; margin-top: 2rem; color: #60efff; text-decoration: none; padding: 12px 25px; border: 2px solid #60efff; border-radius: 50px; transition: 0.3s; }
         .back-btn:hover { background: #60efff; color: #0a0118; }
     </style>
@@ -23,38 +25,37 @@
     </div>
 
     <script>
-    // Cấu hình cứng để tránh nhầm lẫn
-    const USER = 'tienminh3027'; 
-    const REPO = 'profile'; 
+        const USER = 'tienminh3027'; 
+        const REPO = 'profile'; 
 
-    async function loadIssues() {
-        const content = document.getElementById('blog-content');
-        try {
-            // Thêm mốc thời gian để trình duyệt không lấy dữ liệu cũ (cache)
-            const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues?state=open&_=${new Date().getTime()}`);
-            
-            if (!res.ok) throw new Error('Không tìm thấy dữ liệu');
-
-            const data = await res.json();
-            
-            if (data.length === 0) {
-                content.innerHTML = '<p style="text-align:center; opacity:0.7;">Đã kết nối! Hãy tạo 1 Issue để đăng bài nhé.</p>';
-            } else {
-                // Hiển thị danh sách bài viết
-                content.innerHTML = data.map(issue => `
-                    <div class="post" style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                        <h3 style="color: #60efff; margin: 0 0 10px 0;">${issue.title}</h3>
-                        <div style="font-size: 0.8rem; opacity: 0.5; margin-bottom: 15px;">📅 Ngày đăng: ${new Date(issue.created_at).toLocaleDateString('vi-VN')}</div>
-                        <div class="post-body" style="line-height: 1.6;">${issue.body ? issue.body.replace(/\n/g, '<br>') : 'Không có nội dung.'}</div>
-                    </div>
-                `).join('');
+        async function loadIssues() {
+            const content = document.getElementById('blog-content');
+            try {
+                // Thêm timestamp để ép trình duyệt tải mới
+                const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues?state=open&t=${new Date().getTime()}`);
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                
+                if (data.length === 0) {
+                    content.innerHTML = '<p style="text-align:center; opacity:0.7;">Chưa có bài đăng nào trong mục Issues.</p>';
+                } else {
+                    content.innerHTML = data.map(issue => {
+                        // Xử lý xuống dòng và giữ nguyên link ảnh nếu có
+                        let bodyContent = issue.body ? issue.body.replace(/\n/g, '<br>') : 'Không có nội dung.';
+                        return `
+                            <div class="post">
+                                <h3>${issue.title}</h3>
+                                <div style="font-size:0.8rem; opacity:0.5; margin-bottom:15px;">📅 Ngày đăng: ${new Date(issue.created_at).toLocaleDateString('vi-VN')}</div>
+                                <div class="post-body">${bodyContent}</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            } catch (err) {
+                content.innerHTML = '<p style="text-align:center; color:#ff4d4d;">❌ Lỗi kết nối. Hãy đảm bảo Repo "profile" đang để ở Public!</p>';
             }
-        } catch (err) {
-            content.innerHTML = '<p style="text-align:center; color:#ff4d4d;">❌ Lỗi kết nối vệ tinh. Thử F5 lại nhé!</p>';
         }
-    }
-
-    // Chạy hàm lấy bài
-    loadIssues();
-</script>
+        loadIssues();
+    </script>
+</body>
 </html>
