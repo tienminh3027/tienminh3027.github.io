@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nguyễn Tiến Minh</title>
+    <title>Tiến Minh | Galaxy Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        /* Khóa cứng khung hình, không cho phép cuộn bất cứ hướng nào */
+        * { box-sizing: border-box; }
+        
         html, body { 
             margin: 0; 
             padding: 0; 
@@ -15,10 +16,10 @@
             overflow: hidden; 
             background: #02010a; 
             color: white; 
-            position: fixed; /* Chặn đứng mọi hành vi kéo trang trên mobile */
+            position: fixed;
+            touch-action: none; /* Chặn mọi hành vi cuộn/kéo trên mobile */
         }
 
-        /* Lớp nền thiên hà luôn full màn hình */
         .galaxy-wrapper { 
             position: fixed; 
             top: 0; 
@@ -27,11 +28,13 @@
             height: 100vh; 
             background: radial-gradient(circle at 50% 50%, #1b0b2e 0%, #02010a 100%);
             z-index: 1; 
-            overflow: hidden; /* Quan trọng: Vật thể con bay ra ngoài sẽ bị cắt bỏ, không làm phình trang */
+            overflow: hidden;
         }
 
         .content { 
-            position: relative; 
+            position: fixed; /* Đổi thành fixed để chắc chắn không bị đẩy */
+            top: 0;
+            left: 0;
             z-index: 10; 
             width: 100vw;
             height: 100vh; 
@@ -40,22 +43,22 @@
             align-items: center; 
             justify-content: center; 
             padding: 20px;
-            box-sizing: border-box;
             text-align: center;
         }
 
         .profile-name { 
             font-family: 'Pacifico', cursive; 
-            /* Co dãn chữ thông minh: cực nhỏ là 2.2rem, cực đại là 5rem */
             font-size: clamp(2.2rem, 12vw, 5rem);  
             background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             background-size: 400%; 
             animation: rgbMove 5s linear infinite;
             filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
             margin-bottom: 20px;
             width: 100%;
+            max-width: 90vw; /* Giới hạn chiều rộng */
         }
         @keyframes rgbMove { from { background-position: 0%; } to { background-position: 400%; } }
 
@@ -70,49 +73,70 @@
             transition: 0.4s; 
             backdrop-filter: blur(10px); 
             margin-bottom: 30px;
-            font-size: 14px;
+            font-size: clamp(12px, 3.5vw, 14px);
             letter-spacing: 1px;
             text-transform: uppercase;
+            display: inline-block;
         }
         .btn-entry:hover { background: white; color: black; transform: scale(1.05); }
 
-        .social-icons { display: flex; gap: 20px; }
+        .social-icons { 
+            display: flex; 
+            gap: 20px; 
+            flex-wrap: wrap;
+            justify-content: center;
+        }
         .social-icon { 
-            width: 50px; height: 50px; 
+            width: 50px; 
+            height: 50px; 
+            min-width: 50px; /* Đảm bảo không co lại */
+            min-height: 50px;
             border-radius: 50%; 
             background: rgba(255,255,255,0.1); 
-            display: flex; align-items: center; justify-content: center; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
             border: 1px solid rgba(255,255,255,0.3); 
             transition: 0.3s;
+            flex-shrink: 0; /* Không cho icon bị nén */
         }
-        .social-icon img { width: 24px; filter: invert(1); }
+        .social-icon img { 
+            width: 24px; 
+            height: 24px;
+            max-width: 24px; /* Chặn cứng kích thước ảnh */
+            max-height: 24px;
+            object-fit: contain;
+            filter: invert(1); 
+        }
         .social-icon:active { transform: scale(0.9); background: rgba(255,255,255,0.3); }
 
-        /* Sao băng: Giới hạn quỹ đạo để không bao giờ tạo ra scrollbar */
+        /* Sao băng: Giới hạn quỹ đạo trong viewport */
         .meteor {
             position: absolute; 
             width: 2px; 
             height: 60px; 
             background: linear-gradient(to bottom, rgba(255,255,255,1), transparent);
             opacity: 0; 
-            pointer-events: none; /* Không cho chạm vào sao băng */
-            animation: meteorRain 4s linear infinite;
+            pointer-events: none;
+            will-change: transform; /* Tối ưu performance */
         }
+        /* Animation chỉ di chuyển TRONG màn hình */
         @keyframes meteorRain {
             0% { transform: translate(0, 0) rotate(45deg); opacity: 0; }
             5% { opacity: 1; }
             40% { opacity: 1; }
-            50% { transform: translate(-400px, 400px) rotate(45deg); opacity: 0; }
-            100% { transform: translate(-400px, 400px) rotate(45deg); opacity: 0; }
+            50% { transform: translate(-40vw, 40vh) rotate(45deg); opacity: 0; }
+            100% { transform: translate(-40vw, 40vh) rotate(45deg); opacity: 0; }
         }
+        .meteor { animation: meteorRain 4s linear infinite; }
 
-        /* Sao nền */
         .star { 
             position: absolute; 
             background: white; 
             border-radius: 50%; 
             animation: twinkle var(--t) infinite; 
             pointer-events: none;
+            will-change: opacity;
         }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     </style>
@@ -140,14 +164,16 @@
         const stars = document.getElementById('starField');
         const meteors = document.getElementById('meteorField');
         
-        // Tạo sao nền (giảm số lượng để mượt hơn trên mobile)
+        // Tạo sao nền
         for (let i = 0; i < 100; i++) {
             const s = document.createElement('div');
             s.className = 'star';
             const size = Math.random() * 2 + 1 + 'px';
-            s.style.width = size; s.style.height = size;
-            s.style.left = Math.random() * 100 + 'vw';
-            s.style.top = Math.random() * 100 + 'vh';
+            s.style.width = size; 
+            s.style.height = size;
+            // Giữ sao TRONG viewport
+            s.style.left = (Math.random() * 95) + '%';
+            s.style.top = (Math.random() * 95) + '%';
             s.style.setProperty('--t', Math.random() * 3 + 2 + 's');
             stars.appendChild(s);
         }
@@ -156,12 +182,16 @@
         setInterval(() => {
             const m = document.createElement('div');
             m.className = 'meteor';
-            m.style.left = (Math.random() * 100) + 'vw'; 
-            m.style.top = (Math.random() * 50) + 'vh';
+            // Chỉ spawn sao băng TRONG viewport
+            m.style.left = (Math.random() * 90) + '%'; 
+            m.style.top = (Math.random() * 40) + '%';
             m.style.animationDuration = (Math.random() * 2 + 3) + 's';
             meteors.appendChild(m);
             setTimeout(() => m.remove(), 4000);
         }, 1500);
+        
+        // Chặn cuộn trên mobile (backup thêm bằng JS)
+        document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
     </script>
 </body>
 </html>
