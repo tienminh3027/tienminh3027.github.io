@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiến Minh | Coder Space</title>
+    <title>Tiến Minh | Coder Universe</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,7 +15,7 @@
             z-index: 1; 
         }
 
-        /* Tên RGB */
+        /* Chữ Tiến Minh RGB */
         .profile-name { 
             font-family: 'Pacifico', cursive; font-size: clamp(3rem, 10vw, 5rem); 
             background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
@@ -26,36 +26,47 @@
         }
         @keyframes rgbMove { from { background-position: 0%; } to { background-position: 400%; } }
 
-        /* Bàn phím Rainbow đổi màu liên tục */
+        /* Bàn phím cơ RGB lơ lửng - Hiệu ứng Rainbow */
         .keyboard {
-            position: absolute; width: 180px; top: 15%; left: 8%; z-index: 5;
-            animation: float 6s ease-in-out infinite, rainbow 3s linear infinite;
-            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+            position: absolute; width: 220px; top: 15%; left: 8%; z-index: 5;
+            animation: float 6s ease-in-out infinite, rainbowLight 3s linear infinite;
         }
 
         /* Coder Nam bên phải */
         .coder {
-            position: absolute; width: 180px; top: 15%; right: 8%; z-index: 5;
+            position: absolute; width: 200px; top: 15%; right: 8%; z-index: 5;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Laptop Gaming bên trái */
+        .laptop {
+            position: absolute; width: 140px; top: 55%; left: 5%; z-index: 4;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        /* Chuột Gaming bên dưới */
+        .mouse {
+            position: absolute; width: 80px; bottom: 15%; left: 20%; z-index: 4;
             animation: float 7s ease-in-out infinite;
         }
 
-        /* Vật phẩm trang trí */
-        .item { position: absolute; opacity: 0.7; z-index: 4; animation: float 8s ease-in-out infinite; }
-        .mouse { width: 60px; bottom: 20%; left: 15%; }
-        .headphone { width: 80px; bottom: 15%; right: 15%; }
-        .laptop { width: 100px; top: 50%; left: 5%; opacity: 0.5; }
+        /* Tai nghe bên dưới phải */
+        .headphone {
+            position: absolute; width: 100px; bottom: 15%; right: 20%; z-index: 4;
+            animation: float 9s ease-in-out infinite;
+        }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(-5deg); }
             50% { transform: translateY(-30px) rotate(5deg); }
         }
 
-        @keyframes rainbow {
-            0% { filter: hue-rotate(0deg) drop-shadow(0 0 15px cyan); }
-            100% { filter: hue-rotate(360deg) drop-shadow(0 0 15px magenta); }
+        @keyframes rainbowLight {
+            0% { filter: hue-rotate(0deg) drop-shadow(0 0 20px cyan); }
+            100% { filter: hue-rotate(360deg) drop-shadow(0 0 20px magenta); }
         }
 
-        /* Sao băng */
+        /* Sao băng & Sao nền */
         .meteor {
             position: absolute; width: 2px; height: 50px; background: linear-gradient(to bottom, #fff, transparent);
             opacity: 0; animation: meteorRain 3s linear infinite;
@@ -72,12 +83,12 @@
             padding: 12px 35px; border-radius: 50px; text-decoration: none; font-weight: 900;
             transition: 0.4s; backdrop-filter: blur(10px); margin-bottom: 25px;
         }
-        .btn-entry:hover { background: white; color: black; transform: scale(1.1); }
+        .btn-entry:hover { background: white; color: black; transform: scale(1.1); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
 
-        .social-icons { display: flex; gap: 15px; }
-        .social-icon { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; }
-        .social-icon:hover { background: white; transform: rotate(360deg); }
-        .social-icon img { width: 25px; filter: invert(1); }
+        .social-icons { display: flex; gap: 20px; }
+        .social-icon { width: 55px; height: 55px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; }
+        .social-icon:hover { background: #fff; transform: translateY(-5px); border-color: #00ff87; }
+        .social-icon img { width: 28px; filter: invert(1); }
         .social-icon:hover img { filter: invert(0); }
 
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite; }
@@ -86,12 +97,13 @@
 </head>
 <body>
     <div class="galaxy-wrapper">
-        <img src="https://cdn-icons-png.flaticon.com/512/810/810452.png" class="keyboard" alt="Keyboard">
-        <img src="https://cdn-icons-png.flaticon.com/512/2018/2018163.png" class="coder" alt="Coder">
+        <img src="https://i.postimg.cc/8P6S9vG0/mechanical-keyboard.png" class="keyboard" alt="Keyboard">
         
-        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055329.png" class="item laptop">
-        <img src="https://cdn-icons-png.flaticon.com/512/3063/3063822.png" class="item mouse">
-        <img src="https://cdn-icons-png.flaticon.com/512/1213/1213233.png" class="item headphone">
+        <img src="https://i.postimg.cc/NjCKQwzm/coder-man.png" class="coder" alt="Coder">
+        
+        <img src="https://i.postimg.cc/1R8h7S8w/gaming-laptop.png" class="laptop" alt="Laptop">
+        <img src="https://i.postimg.cc/YSpwGZbx/gaming-mouse.png" class="mouse" alt="Mouse">
+        <img src="https://i.postimg.cc/8cnX31Xm/headphones.png" class="headphone" alt="Headphone">
 
         <div id="starField"></div>
         <div id="meteorField"></div>
@@ -109,7 +121,7 @@
     <script>
         const stars = document.getElementById('starField');
         const meteors = document.getElementById('meteorField');
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 120; i++) {
             const s = document.createElement('div');
             s.className = 'star';
             const size = Math.random() * 3 + 'px';
