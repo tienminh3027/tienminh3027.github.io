@@ -2,32 +2,157 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Thành Tích</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Pacifico&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Quicksand', sans-serif; background: #02010a; color: white; min-height: 100vh; overflow-x: hidden; }
-        .galaxy-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1b0b2e 0%, #02010a 100%); z-index: -1; }
-        .container { max-width: 800px; margin: 50px auto; padding: 20px; position: relative; z-index: 1; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html, body { 
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Chặn cuộn ngang */
+            position: relative;
+        }
+        
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background: #02010a; 
+            color: white; 
+            min-height: 100vh; 
+        }
+        
+        .galaxy-bg { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: radial-gradient(circle at center, #1b0b2e 0%, #02010a 100%); 
+            z-index: -1; 
+        }
+        
+        .container { 
+            max-width: 800px; 
+            width: 100%; /* Thêm dòng này */
+            margin: 50px auto; 
+            padding: 20px; 
+            position: relative; 
+            z-index: 1; 
+        }
+        
         header h1 { 
-            text-align: center; font-family: 'Pacifico', cursive; font-size: 3rem; margin-bottom: 40px;
+            text-align: center; 
+            font-family: 'Pacifico', cursive; 
+            font-size: clamp(2rem, 8vw, 3rem); /* Responsive font size */
+            margin-bottom: 40px;
             background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 400%; animation: rgbMove 8s linear infinite;
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+            background-size: 400%; 
+            animation: rgbMove 8s linear infinite;
+            word-break: break-word; /* Tránh chữ tràn */
         }
-        @keyframes rgbMove { from { background-position: 0%; } to { background-position: 400%; } }
+        
+        @keyframes rgbMove { 
+            from { background-position: 0%; } 
+            to { background-position: 400%; } 
+        }
+        
         .card {
-            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 20px; margin-bottom: 20px;
-            animation: slideUp 0.5s ease-out forwards; transition: 0.3s;
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 20px; /* Giảm padding cho mobile */
+            border-radius: 20px; 
+            margin-bottom: 20px;
+            animation: slideUp 0.5s ease-out forwards; 
+            transition: 0.3s;
+            width: 100%; /* Chặn cứng chiều rộng */
+            max-width: 100%; /* Không được vượt quá container */
+            overflow-wrap: break-word; /* Xuống dòng khi text dài */
+            word-wrap: break-word;
         }
-        .card:hover { transform: translateY(-5px); border-color: #00ff87; }
-        .card h3 { color: #60efff; margin-bottom: 10px; font-family: 'Montserrat', sans-serif; }
-        .card p { line-height: 1.6; opacity: 0.9; white-space: pre-wrap; margin-bottom: 15px; }
-        .date-tag { background: #00ff87; color: #000; padding: 4px 12px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; }
-        .back-btn { display: block; width: fit-content; margin: 40px auto; padding: 12px 30px; border: 2px solid white; color: white; text-decoration: none; border-radius: 50px; transition: 0.3s; }
-        .back-btn:hover { background: white; color: black; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: #00ff87; 
+        }
+        
+        .card h3 { 
+            color: #60efff; 
+            margin-bottom: 10px; 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: clamp(1.2rem, 5vw, 1.5rem); /* Responsive */
+            word-break: break-word;
+        }
+        
+        .card p { 
+            line-height: 1.6; 
+            opacity: 0.9; 
+            white-space: pre-wrap; 
+            margin-bottom: 15px; 
+            font-size: clamp(0.9rem, 3.5vw, 1rem); /* Responsive */
+            word-break: break-word; /* Xuống dòng khi text dài */
+            overflow-wrap: break-word;
+        }
+        
+        .date-tag { 
+            background: #00ff87; 
+            color: #000; 
+            padding: 4px 12px; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            font-size: clamp(0.7rem, 3vw, 0.8rem); /* Responsive */
+            display: inline-block; /* Tránh bị giãn */
+        }
+        
+        .back-btn { 
+            display: block; 
+            width: fit-content; 
+            max-width: 90%; /* Giới hạn trên mobile */
+            margin: 40px auto; 
+            padding: 12px 30px; 
+            border: 2px solid white; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            transition: 0.3s; 
+            text-align: center;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+        }
+        
+        .back-btn:hover { 
+            background: white; 
+            color: black; 
+        }
+        
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Media query cho màn hình nhỏ */
+        @media (max-width: 600px) {
+            .container {
+                margin: 30px auto;
+                padding: 15px;
+            }
+            
+            header h1 {
+                margin-bottom: 30px;
+            }
+            
+            .card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -47,7 +172,10 @@
                 let body = i.body || '';
                 let date = new Date(i.created_at).toLocaleDateString('vi-VN');
                 const match = body.match(/Ngày:\s*(\d{1,2}\/\d{1,2}\/\d{4})/i);
-                if (match) { date = match[1]; body = body.replace(match[0], '').trim(); }
+                if (match) { 
+                    date = match[1]; 
+                    body = body.replace(match[0], '').trim(); 
+                }
                 const item = document.createElement('div');
                 item.className = 'card';
                 item.innerHTML = `<h3>${i.title}</h3><p>${body}</p><span class="date-tag">📅 ${date}</span>`;
