@@ -3,112 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thành Tích</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Pacifico&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <title>Tiến Minh | Space Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Quicksand', sans-serif; background: #02010a; color: white; min-height: 100vh; overflow-x: hidden; }
-
-        /* Nền Galaxy đồng bộ với trang chủ */
-        .galaxy-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1b0b2e 0%, #02010a 100%);
-            z-index: -1;
+        body { font-family: 'Montserrat', sans-serif; overflow: hidden; background: #02010a; color: white; }
+        
+        /* Nền Tinh Vân (Nebula) */
+        .galaxy-wrapper { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: radial-gradient(circle at 50% 50%, #1b0b2e 0%, #02010a 100%);
+            z-index: 1; 
+        }
+        .nebula {
+            position: absolute; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.3; pointer-events: none;
         }
 
-        .container { max-width: 800px; margin: 50px auto; padding: 20px; position: relative; z-index: 1; }
-
-        header { text-align: center; margin-bottom: 50px; }
-        header h1 { 
-            font-family: 'Pacifico', cursive; font-size: 3.5rem; 
+        /* Chữ RGB Neon */
+        .profile-name { 
+            font-family: 'Pacifico', cursive; font-size: clamp(3.5rem, 12vw, 6rem); 
             background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-size: 400%; animation: rgbText 8s linear infinite;
+            background-size: 400%; animation: rgbMove 5s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.4));
+            margin-bottom: 30px; position: relative; z-index: 10;
         }
-        @keyframes rgbText { from { background-position: 0%; } to { background-position: 400%; } }
+        @keyframes rgbMove { from { background-position: 0%; } to { background-position: 400%; } }
 
-        /* Card thành tích */
-        .achievement-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px; border-radius: 25px; margin-bottom: 25px;
-            transition: 0.4s; animation: slideIn 0.6s ease-out forwards;
+        /* Phi hành gia 3D Floating */
+        .astro { 
+            position: absolute; width: 180px; top: 20%; left: 15%; z-index: 5; 
+            animation: astroFloat 8s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(96, 239, 255, 0.3));
         }
-        .achievement-card:hover {
-            transform: translateY(-10px); border-color: #00ff87;
-            box-shadow: 0 10px 30px rgba(0, 255, 135, 0.2);
+        @keyframes astroFloat { 0%, 100% { transform: translate(0, 0) rotate(-10deg); } 50% { transform: translate(20px, -40px) rotate(10deg); } }
+
+        /* Thiên thạch (Meteor) */
+        .meteor {
+            position: absolute; width: 2px; height: 50px; background: linear-gradient(to bottom, #fff, transparent);
+            opacity: 0; animation: meteorRain 3s linear infinite;
         }
-        .achievement-card h3 { color: #60efff; font-size: 1.6rem; margin-bottom: 15px; font-family: 'Montserrat', sans-serif; }
-        .achievement-card p { line-height: 1.7; opacity: 0.9; font-size: 1.1rem; }
-        .achievement-card .date-tag {
-            display: inline-block; background: #00ff87; color: #000;
-            padding: 5px 15px; border-radius: 50px; font-weight: bold;
-            font-size: 0.8rem; margin-top: 20px;
+        @keyframes meteorRain {
+            0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
+            100% { transform: translate(-500px, 500px) rotate(45deg); opacity: 0; }
         }
 
-        .back-home {
-            display: inline-block; margin-top: 40px; padding: 12px 30px;
-            border: 2px solid white; color: white; text-decoration: none;
-            border-radius: 50px; font-weight: bold; transition: 0.3s;
+        .content { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        /* Nút Blog Xịn */
+        .btn-entry {
+            background: rgba(255, 255, 255, 0.1); border: 2px solid white; color: white;
+            padding: 15px 45px; border-radius: 50px; cursor: pointer; backdrop-filter: blur(10px);
+            font-weight: 900; text-decoration: none; font-size: 1.2rem; transition: 0.4s;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
-        .back-home:hover { background: white; color: #000; }
+        .btn-entry:hover { background: white; color: black; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255,255,255,0.4); }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
-    <div class="galaxy-bg"></div>
-    <div class="container">
-        <header>
-            <h1>Nhật Ký Achievement🏆</h1>
-        </header>
-
-        <div id="achievements-list">
-            <p style="text-align: center;">Đang kết nối vệ tinh...</p>
-        </div>
-
-        <div style="text-align: center;">
-            <a href="index.html" class="back-home">← QUAY VỀ PHI THUYỀN</a>
-        </div>
+    <div class="galaxy-wrapper">
+        <div class="nebula"></div>
+        <img src="https://i.postimg.cc/85m6p0Zk/astronaut.png" class="astro">
+        <div id="starField"></div>
+        <div id="meteorField"></div>
+    </div>
+    <div class="content">
+        <h1 class="profile-name">Tiến Minh</h1>
+        <a href="blog.html" class="btn-entry">XEM THÀNH TÍCH 🏆</a>
     </div>
 
     <script>
-        const USER = 'tienminh3027';
-        const REPO = 'profile'; 
-
-        async function getIssues() {
-            const list = document.getElementById('achievements-list');
-            try {
-                const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues?state=open`);
-                const data = await res.json();
-                list.innerHTML = '';
-
-                data.forEach(issue => {
-                    let bodyText = issue.body || '';
-                    let displayDate = new Date(issue.created_at).toLocaleDateString('vi-VN');
-
-                    // Mẹo: Kiểm tra xem Minh có ghi "Ngày: dd/mm/yyyy" ở đầu Issue không
-                    const dateMatch = bodyText.match(/Ngày:\s*(\d{1,2}\/\d{1,2}\/?\d{0,4})/i);
-                    if (dateMatch) {
-                        displayDate = dateMatch[1]; // Lấy ngày Minh tự ghi
-                        bodyText = bodyText.replace(dateMatch[0], '').trim(); // Xóa dòng ngày trong phần mô tả cho đẹp
-                    }
-
-                    const card = document.createElement('div');
-                    card.className = 'achievement-card';
-                    card.innerHTML = `
-                        <h3>${issue.title}</h3>
-                        <p>${bodyText}</p>
-                        <span class="date-tag">📅 Cột mốc: ${displayDate}</span>
-                    `;
-                    list.appendChild(card);
-                });
-            } catch (e) {
-                list.innerHTML = '<p>Lỗi kết nối vũ trụ!</p>';
-            }
+        // Tạo sao và thiên thạch
+        const stars = document.getElementById('starField');
+        const meteors = document.getElementById('meteorField');
+        for (let i = 0; i < 100; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            s.style.width = s.style.height = Math.random() * 3 + 'px';
+            s.style.left = Math.random() * 100 + '%';
+            s.style.top = Math.random() * 100 + '%';
+            s.style.setProperty('--t', Math.random() * 3 + 2 + 's');
+            stars.appendChild(s);
         }
-        getIssues();
+        setInterval(() => {
+            const m = document.createElement('div');
+            m.className = 'meteor';
+            m.style.left = Math.random() * 100 + '%';
+            m.style.top = '-50px';
+            meteors.appendChild(m);
+            setTimeout(() => m.remove(), 3000);
+        }, 1000);
     </script>
 </body>
 </html>
