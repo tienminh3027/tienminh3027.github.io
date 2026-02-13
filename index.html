@@ -15,7 +15,6 @@
             z-index: 1; 
         }
 
-        /* Chữ Tiến Minh RGB */
         .profile-name { 
             font-family: 'Pacifico', cursive; font-size: clamp(3rem, 10vw, 5rem); 
             background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
@@ -26,54 +25,27 @@
         }
         @keyframes rgbMove { from { background-position: 0%; } to { background-position: 400%; } }
 
-        /* Bàn phím cơ RGB lơ lửng - Hiệu ứng Rainbow */
-        .keyboard {
-            position: absolute; width: 220px; top: 15%; left: 8%; z-index: 5;
-            animation: float 6s ease-in-out infinite, rainbowLight 3s linear infinite;
+        /* Animation cho các vật phẩm */
+        .item { position: absolute; z-index: 5; transition: 0.3s; }
+        
+        /* Bàn phím - Dùng Filter để tạo hiệu ứng Rainbow RGB */
+        .keyboard { 
+            width: 180px; top: 15%; left: 8%; 
+            animation: float 6s ease-in-out infinite, rgbGlow 4s linear infinite;
+        }
+        @keyframes rgbGlow {
+            0% { filter: drop-shadow(0 0 15px #ff0000) hue-rotate(0deg); }
+            100% { filter: drop-shadow(0 0 15px #ff0000) hue-rotate(360deg); }
         }
 
-        /* Coder Nam bên phải */
-        .coder {
-            position: absolute; width: 200px; top: 15%; right: 8%; z-index: 5;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        /* Laptop Gaming bên trái */
-        .laptop {
-            position: absolute; width: 140px; top: 55%; left: 5%; z-index: 4;
-            animation: float 10s ease-in-out infinite;
-        }
-
-        /* Chuột Gaming bên dưới */
-        .mouse {
-            position: absolute; width: 80px; bottom: 15%; left: 20%; z-index: 4;
-            animation: float 7s ease-in-out infinite;
-        }
-
-        /* Tai nghe bên dưới phải */
-        .headphone {
-            position: absolute; width: 100px; bottom: 15%; right: 20%; z-index: 4;
-            animation: float 9s ease-in-out infinite;
-        }
+        .coder { width: 160px; top: 12%; right: 10%; animation: float 8s ease-in-out infinite; }
+        .laptop { width: 120px; top: 55%; left: 5%; animation: float 10s ease-in-out infinite; opacity: 0.8; }
+        .mouse { width: 60px; bottom: 15%; left: 15%; animation: float 7s ease-in-out infinite; }
+        .headphone { width: 90px; bottom: 15%; right: 15%; animation: float 9s ease-in-out infinite; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(-5deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
-        }
-
-        @keyframes rainbowLight {
-            0% { filter: hue-rotate(0deg) drop-shadow(0 0 20px cyan); }
-            100% { filter: hue-rotate(360deg) drop-shadow(0 0 20px magenta); }
-        }
-
-        /* Sao băng & Sao nền */
-        .meteor {
-            position: absolute; width: 2px; height: 50px; background: linear-gradient(to bottom, #fff, transparent);
-            opacity: 0; animation: meteorRain 3s linear infinite;
-        }
-        @keyframes meteorRain {
-            0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
-            100% { transform: translate(-500px, 500px) rotate(45deg); opacity: 0; }
+            50% { transform: translateY(-30px) rotate(10deg); }
         }
 
         .content { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -83,11 +55,11 @@
             padding: 12px 35px; border-radius: 50px; text-decoration: none; font-weight: 900;
             transition: 0.4s; backdrop-filter: blur(10px); margin-bottom: 25px;
         }
-        .btn-entry:hover { background: white; color: black; transform: scale(1.1); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+        .btn-entry:hover { background: white; color: black; transform: scale(1.1); box-shadow: 0 0 30px rgba(0, 255, 135, 0.5); }
 
         .social-icons { display: flex; gap: 20px; }
         .social-icon { width: 55px; height: 55px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; }
-        .social-icon:hover { background: #fff; transform: translateY(-5px); border-color: #00ff87; }
+        .social-icon:hover { background: #fff; transform: translateY(-5px); }
         .social-icon img { width: 28px; filter: invert(1); }
         .social-icon:hover img { filter: invert(0); }
 
@@ -97,16 +69,13 @@
 </head>
 <body>
     <div class="galaxy-wrapper">
-        <img src="https://i.postimg.cc/8P6S9vG0/mechanical-keyboard.png" class="keyboard" alt="Keyboard">
-        
-        <img src="https://i.postimg.cc/NjCKQwzm/coder-man.png" class="coder" alt="Coder">
-        
-        <img src="https://i.postimg.cc/1R8h7S8w/gaming-laptop.png" class="laptop" alt="Laptop">
-        <img src="https://i.postimg.cc/YSpwGZbx/gaming-mouse.png" class="mouse" alt="Mouse">
-        <img src="https://i.postimg.cc/8cnX31Xm/headphones.png" class="headphone" alt="Headphone">
+        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/keyboard.svg" class="item keyboard" style="filter: invert(1);">
+        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/user-ninja.svg" class="item coder" style="filter: invert(1);">
+        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/laptop-code.svg" class="item laptop" style="filter: invert(1);">
+        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/mouse-pointer.svg" class="item mouse" style="filter: invert(1);">
+        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/headphones.svg" class="item headphone" style="filter: invert(1);">
 
         <div id="starField"></div>
-        <div id="meteorField"></div>
     </div>
     
     <div class="content">
@@ -120,7 +89,6 @@
 
     <script>
         const stars = document.getElementById('starField');
-        const meteors = document.getElementById('meteorField');
         for (let i = 0; i < 120; i++) {
             const s = document.createElement('div');
             s.className = 'star';
@@ -131,14 +99,6 @@
             s.style.setProperty('--t', Math.random() * 3 + 2 + 's');
             stars.appendChild(s);
         }
-        setInterval(() => {
-            const m = document.createElement('div');
-            m.className = 'meteor';
-            m.style.left = (Math.random() * 100 + 20) + '%';
-            m.style.top = '-50px';
-            meteors.appendChild(m);
-            setTimeout(() => m.remove(), 3000);
-        }, 1500);
     </script>
 </body>
 </html>
