@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thành Tích | Tiến Minh</title>
+    <title>Thành Tích</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Pacifico&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Quicksand', sans-serif; background: #02010a; color: white; min-height: 100vh; overflow-x: hidden; }
 
-        /* Nền không gian đồng bộ trang chủ */
         .galaxy-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #1b0b2e 0%, #02010a 100%);
@@ -27,7 +26,6 @@
         }
         @keyframes rgbMove { from { background-position: 0%; } to { background-position: 400%; } }
 
-        /* Danh sách thành tích */
         #achievements-list { display: grid; gap: 25px; }
 
         .card {
@@ -36,6 +34,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 30px; border-radius: 20px;
             transition: 0.4s; animation: slideUp 0.6s ease-out forwards;
+            position: relative;
         }
         .card:hover {
             transform: translateY(-10px); border-color: #00ff87;
@@ -46,27 +45,24 @@
             font-family: 'Montserrat', sans-serif; color: #60efff; 
             font-size: 1.8rem; margin-bottom: 15px; 
         }
-        .card p { line-height: 1.8; opacity: 0.9; font-size: 1.1rem; margin-bottom: 20px; }
+        .card p { line-height: 1.8; opacity: 0.9; font-size: 1.1rem; margin-bottom: 20px; white-space: pre-wrap; }
 
-        .meta-info {
-            display: flex; justify-content: space-between; align-items: center;
-            border-top: 1px solid rgba(255,255,255,0.1); pt: 15px; padding-top: 15px;
-        }
         .date-tag {
-            background: #00ff87; color: #000; padding: 5px 15px;
-            border-radius: 50px; font-weight: 700; font-size: 0.85rem;
+            display: inline-block;
+            background: linear-gradient(45deg, #00ff87, #60efff);
+            color: #000; padding: 6px 18px;
+            border-radius: 50px; font-weight: 800; font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0, 255, 135, 0.3);
         }
 
         .back-btn {
-            display: inline-block; margin-top: 50px; padding: 15px 40px;
+            display: inline-block; margin: 50px auto; padding: 15px 40px;
             border: 2px solid white; color: white; text-decoration: none;
             border-radius: 50px; font-weight: bold; transition: 0.3s;
         }
         .back-btn:hover { background: white; color: black; transform: scale(1.05); }
 
         @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Loading animation */
         .loader { text-align: center; font-size: 1.5rem; margin-top: 100px; font-family: 'Pacifico'; }
     </style>
 </head>
@@ -88,37 +84,30 @@
     </div>
 
     <script>
-        // Cấu hình thông tin GitHub của Minh
         const USER = 'tienminh3027';
         const REPO = 'profile'; 
 
         async function fetchBlog() {
             const list = document.getElementById('achievements-list');
             try {
-                // Gọi API lấy các Issue từ repo profile
-                const response = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues?state=open`);
+                const response = await fetch(`https://api.github.com/repos/${USER}/${REPO}/issues?state=open&sort=created&direction=desc`);
                 const issues = await response.json();
                 
-                list.innerHTML = ''; // Xóa thông báo loading
-
-                if (issues.length === 0) {
-                    list.innerHTML = '<p style="text-align:center">Chưa có thành tích nào được ghi lại.</p>';
-                    return;
-                }
+                list.innerHTML = ''; 
 
                 issues.forEach(issue => {
-                    let content = issue.body || 'Không có mô tả.';
-                    // Mặc định lấy ngày tạo trên GitHub
-                    let dateStr = new Date(issue.created_at).toLocaleDateString('vi-VN');
+                    let content = issue.body || '';
+                    // Lấy ngày mặc định từ GitHub
+                    let displayDate = new Date(issue.created_at).toLocaleDateString('vi-VN');
 
-                    // LOGIC FIX NGÀY ĐĂNG:
-                    // Nếu trong nội dung có chữ "Ngày: dd/mm/yyyy" thì sẽ lấy ngày đó làm ngày hiển thị
+                    // REGEX MỚI: Tìm dòng có chữ "Ngày:" ở bất kỳ đâu
                     const dateRegex = /Ngày:\s*(\d{1,2}\/\d{1,2}\/\d{4})/i;
                     const match = content.match(dateRegex);
                     
                     if (match) {
-                        dateStr = match[1]; // Lấy ngày Minh tự ghi
-                        content = content.replace(match[0], '').trim(); // Xóa dòng ngày trong text cho đẹp
+                        displayDate = match[1]; // Ghi đè bằng ngày Minh viết
+                        // Xóa dòng "Ngày: ..." khỏi nội dung hiển thị cho sạch
+                        content = content.replace(match[0], '').trim(); 
                     }
 
                     const card = document.createElement('div');
@@ -126,15 +115,14 @@
                     card.innerHTML = `
                         <h3>${issue.title}</h3>
                         <p>${content}</p>
-                        <div class="meta-info">
-                            <span class="date-tag">📅 Mốc thời gian: ${dateStr}</span>
-                            <a href="${issue.html_url}" target="_blank" style="color:#60efff; text-decoration:none; font-size:0.9rem">Xem trên GitHub →</a>
+                        <div>
+                            <span class="date-tag">📅 ${displayDate}</span>
                         </div>
                     `;
                     list.appendChild(card);
                 });
             } catch (error) {
-                list.innerHTML = '<div class="loader">Không thể kết nối với dữ liệu GitHub!</div>';
+                list.innerHTML = '<div class="loader">Lỗi kết nối vệ tinh!</div>';
             }
         }
 
