@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiến Minh | Coder Universe</title>
+    <title> Nguyên Tiến Minh </title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,6 +15,7 @@
             z-index: 1; 
         }
 
+        /* Chữ Tiến Minh RGB */
         .profile-name { 
             font-family: 'Pacifico', cursive; font-size: clamp(3rem, 10vw, 5rem); 
             background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
@@ -25,29 +26,32 @@
         }
         @keyframes rgbMove { from { background-position: 0%; } to { background-position: 400%; } }
 
-        /* Animation cho các vật phẩm */
-        .item { position: absolute; z-index: 5; transition: 0.3s; }
-        
-        /* Bàn phím - Dùng Filter để tạo hiệu ứng Rainbow RGB */
-        .keyboard { 
-            width: 180px; top: 15%; left: 8%; 
-            animation: float 6s ease-in-out infinite, rgbGlow 4s linear infinite;
-        }
-        @keyframes rgbGlow {
-            0% { filter: drop-shadow(0 0 15px #ff0000) hue-rotate(0deg); }
-            100% { filter: drop-shadow(0 0 15px #ff0000) hue-rotate(360deg); }
+        /* Animation lơ lửng chung */
+        .char { position: absolute; z-index: 5; transition: 0.3s; filter: drop-shadow(0 0 20px rgba(255,255,255,0.2)); }
+
+        /* Thằng Coder bên trái */
+        .coder { 
+            width: 200px; top: 20%; left: 8%; 
+            animation: floatCoder 6s ease-in-out infinite;
         }
 
-        .coder { width: 160px; top: 12%; right: 10%; animation: float 8s ease-in-out infinite; }
-        .laptop { width: 120px; top: 55%; left: 5%; animation: float 10s ease-in-out infinite; opacity: 0.8; }
-        .mouse { width: 60px; bottom: 15%; left: 15%; animation: float 7s ease-in-out infinite; }
-        .headphone { width: 90px; bottom: 15%; right: 15%; animation: float 9s ease-in-out infinite; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(-5deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
+        /* Thằng Gamer bên phải */
+        .gamer { 
+            width: 200px; top: 20%; right: 8%; 
+            animation: floatGamer 7s ease-in-out infinite;
         }
 
+        @keyframes floatCoder {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-30px) rotate(3deg); }
+        }
+
+        @keyframes floatGamer {
+            0%, 100% { transform: translateY(0) rotate(3deg); }
+            50% { transform: translateY(-40px) rotate(-3deg); }
+        }
+
+        /* Content chính */
         .content { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
         .btn-entry {
@@ -55,25 +59,25 @@
             padding: 12px 35px; border-radius: 50px; text-decoration: none; font-weight: 900;
             transition: 0.4s; backdrop-filter: blur(10px); margin-bottom: 25px;
         }
-        .btn-entry:hover { background: white; color: black; transform: scale(1.1); box-shadow: 0 0 30px rgba(0, 255, 135, 0.5); }
+        .btn-entry:hover { background: white; color: black; transform: scale(1.1); box-shadow: 0 0 30px #fff; }
 
+        /* Social Icons */
         .social-icons { display: flex; gap: 20px; }
         .social-icon { width: 55px; height: 55px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; }
         .social-icon:hover { background: #fff; transform: translateY(-5px); }
         .social-icon img { width: 28px; filter: invert(1); }
         .social-icon:hover img { filter: invert(0); }
 
+        /* Sao nền */
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
     <div class="galaxy-wrapper">
-        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/keyboard.svg" class="item keyboard" style="filter: invert(1);">
-        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/user-ninja.svg" class="item coder" style="filter: invert(1);">
-        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/laptop-code.svg" class="item laptop" style="filter: invert(1);">
-        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/mouse-pointer.svg" class="item mouse" style="filter: invert(1);">
-        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/headphones.svg" class="item headphone" style="filter: invert(1);">
+        <img src="https://cdni.iconscout.com/illustration/premium/thumb/male-programmer-working-on-laptop-5695601-4743373.png" class="char coder" alt="Coder">
+        
+        <img src="https://cdni.iconscout.com/illustration/free/thumb/free-gamer-person-playing-video-game-2111589-1781203.png" class="char gamer" alt="Gamer">
 
         <div id="starField"></div>
     </div>
@@ -89,7 +93,7 @@
 
     <script>
         const stars = document.getElementById('starField');
-        for (let i = 0; i < 120; i++) {
+        for (let i = 0; i < 150; i++) {
             const s = document.createElement('div');
             s.className = 'star';
             const size = Math.random() * 3 + 'px';
