@@ -3,47 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiến Minh | Space Odyssey</title>
+    <title>Nguyễn Tiến Minh</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; overflow: hidden; background: #02010a; color: white; }
         
-        /* Hiệu ứng nền Thiên hà & Nebula */
+        /* Nền Thiên Hà & Nebula */
         .galaxy-wrapper { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: radial-gradient(circle at 50% 50%, #1b0b2e 0%, #02010a 100%);
             z-index: 1; 
         }
-        .nebula {
-            position: absolute; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.4; pointer-events: none;
-        }
 
-        /* Tên đổi màu RGB liên tục */
+        /* Chữ RGB Neon Đổi Màu */
         .profile-name { 
             font-family: 'Pacifico', cursive; font-size: clamp(3.5rem, 12vw, 5.5rem); 
             background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-size: 400%; animation: rgbMove 5s linear infinite;
-            filter: drop-shadow(0 0 25px rgba(255,255,255,0.4));
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.4));
             margin-bottom: 25px; position: relative; z-index: 10;
         }
         @keyframes rgbMove { from { background-position: 0%; } to { background-position: 400%; } }
 
-        /* Phi hành gia "Cute" lơ lửng */
+        /* Fix Animation Phi Hành Gia - Bay lơ lửng cực mượt */
         .astro { 
-            position: absolute; width: clamp(120px, 20vw, 180px); top: 15%; left: 10%; z-index: 5; 
-            animation: astroFloat 8s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px rgba(96, 239, 255, 0.5));
+            position: absolute; width: 160px; top: 15%; left: 12%; z-index: 5; 
+            animation: astroFloat 10s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.2));
         }
         @keyframes astroFloat { 
-            0%, 100% { transform: translate(0, 0) rotate(-10deg); } 
-            50% { transform: translate(30px, -50px) rotate(15deg); } 
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -40px) rotate(10deg); }
+            66% { transform: translate(-20px, 20px) rotate(-10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        /* Hiệu ứng Sao băng (Meteor) */
+        /* Fix Sao Băng (Meteor) */
         .meteor {
             position: absolute; width: 2px; height: 60px; 
             background: linear-gradient(to bottom, #fff, transparent);
@@ -59,42 +56,33 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
         }
         
-        /* Nút Xem Thành Tích */
+        /* Nút Vào Blog */
         .btn-entry {
             background: rgba(255, 255, 255, 0.1); border: 2px solid white; color: white;
-            padding: 14px 45px; border-radius: 50px; cursor: pointer; backdrop-filter: blur(15px);
+            padding: 14px 40px; border-radius: 50px; cursor: pointer; backdrop-filter: blur(10px);
             font-weight: 900; text-decoration: none; font-size: 1.1rem; transition: 0.4s;
-            margin-bottom: 35px; box-shadow: 0 0 20px rgba(255,255,255,0.1);
+            margin-bottom: 30px; box-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
-        .btn-entry:hover { 
-            background: white; color: black; transform: translateY(-8px); 
-            box-shadow: 0 15px 40px rgba(255,255,255,0.4); 
-        }
+        .btn-entry:hover { background: white; color: black; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255,255,255,0.4); }
 
-        /* Social Icons (FB & TikTok) */
-        .social-icons { display: flex; gap: 25px; }
+        /* Social Icons */
+        .social-icons { display: flex; gap: 20px; }
         .social-icon { 
-            width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); 
+            width: 55px; height: 55px; border-radius: 50%; background: rgba(255,255,255,0.1); 
             display: flex; align-items: center; justify-content: center; 
-            border: 2px solid rgba(255,255,255,0.3); transition: 0.4s; 
+            border: 1px solid rgba(255,255,255,0.3); transition: 0.4s; 
         }
-        .social-icon:hover { 
-            transform: scale(1.2) rotate(10deg); 
-            background: #fff; border-color: #00ff87;
-            box-shadow: 0 0 25px rgba(0, 255, 135, 0.6);
-        }
-        .social-icon img { width: 30px; filter: invert(1); transition: 0.3s; }
+        .social-icon:hover { transform: scale(1.1); background: #fff; border-color: #00ff87; }
+        .social-icon img { width: 28px; filter: invert(1); transition: 0.3s; }
         .social-icon:hover img { filter: invert(0); }
 
-        /* Ngôi sao nền */
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--t) infinite; }
         @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
     <div class="galaxy-wrapper">
-        <div class="nebula"></div>
-        <img src="https://i.postimg.cc/85m6p0Zk/astronaut.png" class="astro" alt="Astronaut">
+        <img src="https://pngimg.com/uploads/astronaut/astronaut_PNG48.png" class="astro" alt="Astronaut">
         <div id="starField"></div>
         <div id="meteorField"></div>
     </div>
@@ -106,10 +94,10 @@
 
         <div class="social-icons">
             <a href="https://facebook.com/tienminh3027" target="_blank" class="social-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
             </a>
             <a href="https://tiktok.com/@tienminh3027" target="_blank" class="social-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
+                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
             </a>
         </div>
     </div>
@@ -118,11 +106,11 @@
         const stars = document.getElementById('starField');
         const meteors = document.getElementById('meteorField');
         
-        // Tạo 150 ngôi sao lấp lánh
+        // Tạo sao lấp lánh
         for (let i = 0; i < 150; i++) {
             const s = document.createElement('div');
             s.className = 'star';
-            const size = Math.random() * 3 + 'px';
+            const size = Math.random() * 2 + 1 + 'px';
             s.style.width = size;
             s.style.height = size;
             s.style.left = Math.random() * 100 + '%';
@@ -131,11 +119,11 @@
             stars.appendChild(s);
         }
 
-        // Tạo hiệu ứng Thiên thạch rơi định kỳ
+        // Tạo sao băng rơi mượt hơn
         setInterval(() => {
             const m = document.createElement('div');
             m.className = 'meteor';
-            m.style.left = Math.random() * 100 + '%';
+            m.style.left = (Math.random() * 100 + 50) + '%';
             m.style.top = '-50px';
             meteors.appendChild(m);
             setTimeout(() => m.remove(), 3000);
